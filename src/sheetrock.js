@@ -503,7 +503,7 @@
 
     try {
 
-      if (options.raw) {
+      if (options.user.raw) {
         response.data = parseDataSimple(rawData);
       }else{
         var attributes = response.attributes = getResponseAttributes(options, rawData);
