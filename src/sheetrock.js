@@ -503,7 +503,7 @@
 
     try {
 
-      if (options.user.raw) {
+      if (options.raw) {
         response.data = parseDataSimple(rawData);
       }else{
         var attributes = response.attributes = getResponseAttributes(options, rawData);
@@ -648,7 +648,8 @@
     labels:       [],          // Array   -- Override *returned* column labels
     rowTemplate:  null,        // Function / Template
     callback:     null,        // Function
-    reset:        false        // Boolean -- Reset request status
+    reset:        false,        // Boolean -- Reset request status
+    raw:          false         //raw 2D array of cells in response.data 
   };
 
   var sheetrock = function (options, bootstrappedData) {
