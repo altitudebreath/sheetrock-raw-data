@@ -433,6 +433,22 @@
 
   };
 
+  // Parse data, row by row, and generate a simpler output array.
+  var parseDataSimple = function (rawData) {
+
+    var output = [];
+    rawData.table.rows.forEach(function (row, i) {
+
+      if (row.c) {
+        output.push(row.c.map(getCellValue));
+      }
+
+    });
+
+    return output;
+
+  };
+
   // Append HTML output to DOM.
   var appendHTMLToDOM = function (target, headerHTML, bodyHTML) {
 
@@ -487,9 +503,13 @@
 
     try {
 
-      var attributes = response.attributes = getResponseAttributes(options, rawData);
-      var rows = response.rows = parseData(options.user, attributes, rawData);
-      response.html = generateHTML(options.user, rows);
+      if (options.user.raw) {
+        response.data = parseDataSimple(rawData);
+      }else{
+        var attributes = response.attributes = getResponseAttributes(options, rawData);
+        response.rows = parseData(options.user, attributes, rawData);
+        response.html = generateHTML(options.user, rows);
+      }
 
       if (options.user.callback) {
         options.user.callback(null, options, response);
